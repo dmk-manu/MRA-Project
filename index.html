@@ -34,9 +34,7 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
-        .serif-heading {
-            font-family: 'Playfair Display', serif;
-        }
+        .serif-heading { font-family: 'Playfair Display', serif; }
 
         .btn-primary {
             background: #0f172a;
@@ -60,9 +58,6 @@
 <body class="p-4">
 
     <div class="w-full max-w-2xl relative">
-        <div class="absolute -top-10 -left-10 w-32 h-32 bg-white/20 rounded-full blur-3xl"></div>
-        <div class="absolute -bottom-10 -right-10 w-32 h-32 bg-white/20 rounded-full blur-3xl"></div>
-
         <div class="study-card p-10 md:p-16 relative overflow-hidden">
             <header class="text-center mb-10">
                 <span class="text-[10px] font-black tracking-[0.3em] text-slate-400 uppercase border-b border-slate-200 pb-1">FORE School of Management</span>
@@ -71,11 +66,11 @@
             </header>
 
             <div class="space-y-6 text-slate-600 leading-relaxed text-center px-4">
-                <p class="text-md font-medium text-slate-800">
-                    "You are invited to participate in a short academic study examining consumer responses to advertisements in the FMCG sector."
+                <p class="text-md">
+                    "You are invited to participate in a short academic study examining consumer responses to advertisements in the FMCG sector. You will view one advertisement and answer a few brief questions based on your immediate impression."
                 </p>
-                <p class="text-sm">
-                    You will view one advertisement and answer a few brief questions based on your immediate impression. Participation is voluntary, and all responses will remain anonymous and used solely for academic purposes.
+                <p class="text-sm font-medium text-slate-400">
+                    Participation is voluntary. Responses are anonymous and used solely for academic purposes.
                 </p>
             </div>
 
@@ -83,31 +78,30 @@
 
             <div id="loader" class="hidden text-center py-4">
                 <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-indigo-500 border-r-transparent"></div>
-                <p class="mt-4 text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Assigning Research Group...</p>
+                <p class="mt-4 text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Assigning Study Group...</p>
             </div>
 
             <div id="actionArea" class="flex flex-col items-center">
                 <button id="startBtn" onclick="randomizeAndRedirect()" class="btn-primary w-full md:w-96 text-white font-bold py-5 px-6 rounded-full uppercase text-[13px] shadow-lg leading-tight">
-                    Not just a survey — your say, your way.
+                    Start Research Study
                 </button>
-                <div class="mt-8 flex items-center gap-4 text-slate-300">
-                    <span class="h-px w-8 bg-slate-200"></span>
-                    <span class="text-[10px] font-semibold tracking-tighter uppercase">50/50 A/B Test Protocol</span>
-                    <span class="h-px w-8 bg-slate-200"></span>
-                </div>
             </div>
         </div>
-        <footer class="mt-8 text-center">
-            <p class="text-[10px] text-white/80 uppercase tracking-widest font-bold drop-shadow-sm">© 2024 FORE School of Management Research</p>
-        </footer>
     </div>
 
     <script>
-        /**
-         * PASTE YOUR TWO LINKS HERE
-         */
-        const TRADITIONAL_LINK = "https://docs.google.com/forms/d/e/1FAIpQLScUAmYgToglaqN3GDCalbCmVG0iQBUaYeA8WGyWgyzZzdH3lw/viewform?usp=header";
-        const DIGITAL_LINK = "https://docs.google.com/forms/d/e/1FAIpQLScpMb-3BA50HqX3mCDDAns7FY1_GnDxdibyUymZpk78uQvX6Q/viewform?usp=header";
+        // Only using the 6 valid links provided
+        const TRADITIONAL_LINKS = [
+            "https://docs.google.com/forms/d/e/1FAIpQLScpEj8IgPmu-vFvjQe7fzT2lR0mwWXHdUs15GL2GSqOfwpJQA/viewform", // TV
+            "https://docs.google.com/forms/d/e/1FAIpQLScI4wJ3VxA95UHGGMfc36jrvXX2Mb6MXHiELk2yjxpUQv3MGA/viewform", // Newspaper
+            "https://docs.google.com/forms/d/e/1FAIpQLSduDmQhy0r2itnxb7krKfQxWDOdMM_GUORCX86W9EeJFsDpRA/viewform"  // Billboard
+        ];
+
+        const DIGITAL_LINKS = [
+            "https://docs.google.com/forms/d/e/1FAIpQLScpMb-3BA50HqX3mCDDAns7FY1_GnDxdibyUymZpk78uQvX6Q/viewform", // Digital Ad
+            "https://docs.google.com/forms/d/e/1FAIpQLSdV-8lKkvB1va87vrHYlMghJ0DhUXsHTTCyF7u2uZEP53Zs9g/viewform", // PR Unboxing
+            "https://docs.google.com/forms/d/e/1FAIpQLSeglZ7pbyUb-sUvQG_eBa63kcMEq27sn0pWEXdgChpYabRnBA/viewform"  // Influencer Review
+        ];
 
         function randomizeAndRedirect() {
             const btnArea = document.getElementById('actionArea');
@@ -116,19 +110,19 @@
             btnArea.classList.add('hidden');
             loader.classList.remove('hidden');
 
-            // Direct 50/50 random selection
-            const links = [TRADITIONAL_LINK, DIGITAL_LINK];
-            const finalUrl = links[Math.floor(Math.random() * links.length)];
+            let selectedUrl;
+
+            // 1. 50/50 Split for Category
+            if (Math.random() < 0.5) {
+                // 2. Select from Traditional (1/3 each)
+                selectedUrl = TRADITIONAL_LINKS[Math.floor(Math.random() * TRADITIONAL_LINKS.length)];
+            } else {
+                // 3. Select from Digital (1/3 each)
+                selectedUrl = DIGITAL_LINKS[Math.floor(Math.random() * DIGITAL_LINKS.length)];
+            }
 
             setTimeout(() => {
-                if (finalUrl && finalUrl.startsWith("http")) {
-                    window.location.href = finalUrl;
-                } else {
-                    loader.innerHTML = `
-                        <p class="text-red-500 text-[10px] uppercase font-bold tracking-widest">Setup Required</p>
-                        <p class="text-xs text-slate-400 mt-2 italic">Please paste your form URLs in the code editor.</p>
-                    `;
-                }
+                window.location.href = selectedUrl;
             }, 1000);
         }
     </script>
