@@ -38,13 +38,6 @@
             font-family: 'Playfair Display', serif;
         }
 
-        .tagline-accent {
-            background: linear-gradient(to right, #e73c7e, #23a6d5);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 800;
-        }
-
         .btn-primary {
             background: #0f172a;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -67,7 +60,6 @@
 <body class="p-4">
 
     <div class="w-full max-w-2xl relative">
-        <!-- Decorative elements -->
         <div class="absolute -top-10 -left-10 w-32 h-32 bg-white/20 rounded-full blur-3xl"></div>
         <div class="absolute -bottom-10 -right-10 w-32 h-32 bg-white/20 rounded-full blur-3xl"></div>
 
@@ -79,11 +71,11 @@
             </header>
 
             <div class="space-y-6 text-slate-600 leading-relaxed text-center px-4">
-                <p class="text-md">
-                    "You are invited to participate in a short academic study examining consumer responses to advertisements in the FMCG sector. You will view one advertisement and answer a few brief questions based on your immediate impression."
+                <p class="text-md font-medium text-slate-800">
+                    "You are invited to participate in a short academic study examining consumer responses to advertisements in the FMCG sector."
                 </p>
-                <p class="text-sm font-medium text-slate-400">
-                    Participation is voluntary, and all responses will remain anonymous and used solely for academic purposes.
+                <p class="text-sm">
+                    You will view one advertisement and answer a few brief questions based on your immediate impression. Participation is voluntary, and all responses will remain anonymous and used solely for academic purposes.
                 </p>
             </div>
 
@@ -91,7 +83,7 @@
 
             <div id="loader" class="hidden text-center py-4">
                 <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-indigo-500 border-r-transparent"></div>
-                <p class="mt-4 text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Personalizing your experience...</p>
+                <p class="mt-4 text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Assigning Research Group...</p>
             </div>
 
             <div id="actionArea" class="flex flex-col items-center">
@@ -100,7 +92,7 @@
                 </button>
                 <div class="mt-8 flex items-center gap-4 text-slate-300">
                     <span class="h-px w-8 bg-slate-200"></span>
-                    <span class="text-[10px] font-semibold tracking-tighter uppercase">Academic Research Protocol</span>
+                    <span class="text-[10px] font-semibold tracking-tighter uppercase">50/50 A/B Test Protocol</span>
                     <span class="h-px w-8 bg-slate-200"></span>
                 </div>
             </div>
@@ -112,44 +104,10 @@
 
     <script>
         /**
-         * SURVEY_LINKS: 18 Experimental Cells (A/B x 3 Brands x 3 Ad Types)
+         * PASTE YOUR TWO LINKS HERE
          */
-        const SURVEY_LINKS = {
-            "Group_A_Traditional": {
-                "Maggi": {
-                    "TV": "https://docs.google.com/forms/d/e/1FAIpQLScpEj8IgPmu-vFvjQe7fzT2lR0mwWXHdUs15GL2GSqOfwpJQA/viewform",
-                    "Newspaper": "https://docs.google.com/forms/d/e/1FAIpQLScI4wJ3VxA95UHGGMfc36jrvXX2Mb6MXHiELk2yjxpUQv3MGA/viewform",
-                    "Billboard": "https://docs.google.com/forms/d/e/1FAIpQLSduDmQhy0r2itnxb7krKfQxWDOdMM_GUORCX86W9EeJFsDpRA/viewform"
-                },
-                "SurfExcel": {
-                    "TV": "https://docs.google.com/forms/d/e/1FAIpQLScVg0iadJkcdHFCpTOKQyEiaD2F8Sjcx5I_cK_4EpEHMfnXEA/viewform",
-                    "Newspaper": "https://docs.google.com/forms/d/e/1FAIpQLSfAtWHyWRKD_XvY3qyXXIzkkAYMAPCwLZHGon-hAY1whQ6q5g/viewform",
-                    "Billboard": "https://docs.google.com/forms/d/e/1FAIpQLSe2_F90tPqXEKuqw8_qIqqPafdVIPsMJ5AVhp-sWNdxYeyAYg/viewform"
-                },
-                "Colgate": {
-                    "TV": "https://docs.google.com/forms/d/e/1FAIpQLSdUZhPYdimUruYUlgLN4_WluJedPEaEvIrXrgOkQ80GcLe1Yg/viewform",
-                    "Newspaper": "https://docs.google.com/forms/d/e/1FAIpQLSeMbXOOLHeNh2JvgyF24qOjRhGa3zKlY0varOjtCxnaUHDMEQ/viewform",
-                    "Billboard": "https://docs.google.com/forms/d/e/1FAIpQLSfklGJnrgR_ffMMQIATA7ZqkpvqWCi68YOA19GVDntRgPaT7g/viewform"
-                }
-            },
-            "Group_B_Digital": {
-                "Maggi": {
-                    "Digital_Ad": "https://docs.google.com/forms/d/e/1FAIpQLScpMb-3BA50HqX3mCDDAns7FY1_GnDxdibyUymZpk78uQvX6Q/viewform",
-                    "PR_Unboxing": "https://docs.google.com/forms/d/e/1FAIpQLSdV-8lKkvB1va87vrHYlMghJ0DhUXsHTTCyF7u2uZEP53Zs9g/viewform",
-                    "Influencer_Review": "https://docs.google.com/forms/d/e/1FAIpQLSeglZ7pbyUb-sUvQG_eBa63kcMEq27sn0pWEXdgChpYabRnBA/viewform"
-                },
-                "SurfExcel": {
-                    "Digital_Ad": "https://docs.google.com/forms/d/e/1FAIpQLSfSN_xqM3gz3uMKpYsD40m8kcpr3jCQMxhYIBRlBho4Mi4AXw/viewform",
-                    "PR_Unboxing": "https://docs.google.com/forms/d/e/1FAIpQLSdZc7NSNOLAxX7LktihNS0jJJCVHinmPXFlhi0X_rHtsZlL-g/viewform",
-                    "Influencer_Review": "https://docs.google.com/forms/d/e/1FAIpQLScUAmYgToglaqN3GDCalbCmVG0iQBUaYeA8WGyWgyzZzdH3lw/viewform"
-                },
-                "Colgate": {
-                    "Digital_Ad": "https://docs.google.com/forms/d/e/1FAIpQLSefB7ZIZ5GFnv3zLf3CpsqO12KV0SAl2GYKyAEsziarsiAXeA/viewform",
-                    "PR_Unboxing": "https://docs.google.com/forms/d/1BG5Q-5aq2XhCGkHaX_vjQYRZ3nhJUbcJX1qepwuYaBw/viewform?edit_requested=true",
-                    "Influencer_Review": "https://docs.google.com/forms/d/e/1FAIpQLSd1XKkA_ngKIqNo4fE0JTOCgvm8qhyyRgIawbe7tTv_1xeaOw/viewform"
-                }
-            }
-        };
+        const TRADITIONAL_LINK = "https://docs.google.com/forms/d/e/1FAIpQLSeglZ7pbyUb-sUvQG_eBa63kcMEq27sn0pWEXdgChpYabRnBA/viewform?usp=sharing&ouid=112120259636366635590";
+        const DIGITAL_LINK = "https://docs.google.com/forms/d/e/1FAIpQLSdV-8lKkvB1va87vrHYlMghJ0DhUXsHTTCyF7u2uZEP53Zs9g/viewform?usp=sharing&ouid=112120259636366635590";
 
         function randomizeAndRedirect() {
             const btnArea = document.getElementById('actionArea');
@@ -158,22 +116,18 @@
             btnArea.classList.add('hidden');
             loader.classList.remove('hidden');
 
-            const groups = Object.keys(SURVEY_LINKS);
-            const selectedGroup = groups[Math.floor(Math.random() * groups.length)];
-
-            const brands = Object.keys(SURVEY_LINKS[selectedGroup]);
-            const selectedBrand = brands[Math.floor(Math.random() * brands.length)];
-
-            const adTypes = Object.keys(SURVEY_LINKS[selectedGroup][selectedBrand]);
-            const selectedAdType = adTypes[Math.floor(Math.random() * adTypes.length)];
-
-            const finalUrl = SURVEY_LINKS[selectedGroup][selectedBrand][selectedAdType];
+            // Direct 50/50 random selection
+            const links = [TRADITIONAL_LINK, DIGITAL_LINK];
+            const finalUrl = links[Math.floor(Math.random() * links.length)];
 
             setTimeout(() => {
                 if (finalUrl && finalUrl.startsWith("http")) {
                     window.location.href = finalUrl;
                 } else {
-                    loader.innerHTML = `<p class="text-red-500 text-[10px] uppercase font-bold tracking-widest">Initialization failed. Please refresh.</p>`;
+                    loader.innerHTML = `
+                        <p class="text-red-500 text-[10px] uppercase font-bold tracking-widest">Setup Required</p>
+                        <p class="text-xs text-slate-400 mt-2 italic">Please paste your form URLs in the code editor.</p>
+                    `;
                 }
             }, 1000);
         }
